@@ -1,0 +1,28 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+deploy:
+  kubectl: #files to run with skaffold
+    manifests:
+      - ./infra/k8s/*
+build:
+  local:
+    push: false
+  artifacts:
+    - image: damilare77/auth
+      context: auth #folder
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+    - image: damilare77/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "**/*.ts"
+            dest: .
+          - src: "**/*.tsx"
+            dest: .
