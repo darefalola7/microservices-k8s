@@ -2,10 +2,6 @@ import express, { Response, Request } from "express";
 import "express-async-errors";
 import cookieSession from "cookie-session";
 
-import { currentUserRouter } from "./routes/currentuser";
-import { signUpRouter } from "./routes/signup";
-import { signInRouter } from "./routes/signin";
-import { signOutRouter } from "./routes/signout";
 import { errorHandler, NotFoundError } from "@dafaltickets/common";
 
 const app = express();
@@ -19,10 +15,6 @@ app.use(
 );
 
 //routers
-app.use(currentUserRouter);
-app.use(signUpRouter);
-app.use(signInRouter);
-app.use(signOutRouter);
 
 app.all("*", async (req: Request, res: Response) => {
   throw new NotFoundError();

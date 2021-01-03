@@ -6,8 +6,8 @@ type HTTPVERBS = "get" | "post" | "put" | "delete";
 type Props = {
   url: string;
   method: HTTPVERBS;
-  body: any;
-  onSuccess: () => void;
+  body?: any;
+  onSuccess?: () => void;
 };
 
 const useRequest = ({ url, method, body, onSuccess }: Props) => {

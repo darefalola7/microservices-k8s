@@ -1,11 +1,8 @@
 import express, { Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { body, validationResult } from "express-validator";
-
+import { body } from "express-validator";
 import { User } from "../models/user";
-import { RequestValidationError } from "../errors/request-validation-error";
-import { BadRequestError } from "../errors/bad-request-error";
-import { validateRequest } from "../middlewares/validate-request";
+import { BadRequestError, validateRequest } from "@dafaltickets/common";
 
 const router = express.Router();
 

@@ -1,38 +1,46 @@
 import React from "react";
-import axios from "axios";
+import buildClient from "../api/build-client";
 import { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import Layout from "../components/Layout";
 
 type Props = {
-  currentUser: {
-    id: string;
-    email: string;
-  } | null;
+  data: {
+    currentUser: {
+      id: string;
+      email: string;
+    } | null;
+  };
 };
 
 const LandingPage: InferGetServerSidePropsType<typeof getServerSideProps> = ({
-  currentUser,
+  data: { currentUser },
 }: Props) => {
   console.log("I am in the component ", currentUser);
-  return <div>Landing Page 44</div>;
+  return (
+    <Layout currentUser={currentUser}>
+      <div>
+        {currentUser ? (
+          <h1>You are signed in</h1>
+        ) : (
+          <h1>You are NOT signed in</h1>
+        )}
+      </div>
+    </Layout>
+  );
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   console.log("I was executed");
   // Call an external API endpoint to get data
-  const response = await axios.get(
-    "http://ingress-nginx-controller.ingress-nginx.svc.cluster.local/api/users/currentuser",
-    {
-      headers: req.headers,
-    }
-  );
-
+  const response = await buildClient(context).get("/api/users/currentuser");
   const currentUser = response.data;
 
+  // console.log(currentUser);
   // By returning { props: users }, the Users component
   // will receive `users` as a prop at build time
   return {
     props: {
-      currentUser,
+      data: currentUser,
     },
   };
 };
