@@ -50,6 +50,7 @@ userSchema.pre("save", async function (done) {
   done();
 });
 
+//make TS do some type checking
 userSchema.statics.build = (attrs: UserAttrs) => {
   return new User(attrs);
 };

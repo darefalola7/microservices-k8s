@@ -35,7 +35,8 @@ beforeEach(async () => {
 });
 
 afterAll(async () => {
-  mongo.stop();
+  await mongo.stop();
+  await mongoose.connection.close();
 });
 
 global.signin = async () => {

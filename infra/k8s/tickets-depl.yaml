@@ -17,6 +17,14 @@ spec:
           image: damilare77/tickets
           ports:
             - containerPort: 3000
+          env:
+            - name: MONGO_URI
+              value: mongodb://tickets-mongo-cluster-ip-service:27017/tickets
+            - name: JWT_KEY
+              valueFrom:
+                secretKeyRef:
+                  key: JWT_KEY
+                  name: jwt-secret
 ---
 apiVersion: v1
 kind: Service
