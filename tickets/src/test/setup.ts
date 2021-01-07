@@ -10,6 +10,7 @@ declare global {
   }
 }
 
+jest.mock("../nats-wrapper");
 let mongo: MongoMemoryServer;
 
 //Hook function - runs before all our tests is tested
@@ -25,6 +26,8 @@ beforeAll(async () => {
 });
 
 beforeEach(async () => {
+  //clear all mocks and reset it, to avoid pollution before other tests
+  jest.clearAllMocks();
   //reach into mongo db and delete all collections
   const collections = await mongoose.connection.db.collections();
 
