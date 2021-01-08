@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tickets-mongo-depl
+  name: orders-mongo-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: tickets-mongo
+      app: orders-mongo
   template:
     metadata:
       labels:
-        app: tickets-mongo
+        app: orders-mongo
     spec:
       containers:
-        - name: tickets-mongo
+        - name: orders-mongo
           image: mongo
           ports:
             - containerPort: 27017
@@ -21,13 +21,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: tickets-mongo-cluster-ip-service
+  name: orders-mongo-cluster-ip-service
 spec: #actual configuration the way the service behaves
   type: ClusterIP
   ports: #ports that the clusterIP will expose or be available on
-    - name: tickets
+    - name: orders
       protocol: TCP
       port: 27017
       targetPort: 27017
   selector:
-    app: tickets-mongo
+    app: orders-mongo
