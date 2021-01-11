@@ -6,7 +6,7 @@ WORKDIR /app
 
 COPY package.json ./
 
-RUN yarn install --production=true
+#RUN yarn install --production=true
 
 COPY ./ ./
 

@@ -5,6 +5,7 @@ import {
   NotAuthorizedError,
   NotFoundError,
   requireAuth,
+  BadRequestError,
 } from "@dafaltickets/common";
 import { Ticket } from "../models/tickets";
 import { TicketUpdatedPublisher } from "../events/publishers/ticket-updated-publisher";
@@ -29,6 +30,10 @@ router.put(
       throw new NotFoundError();
     }
 
+    if (ticket.orderId) {
+      throw new BadRequestError("Cannot edit a reserved ticket");
+    }
+
     if (ticket.userId !== req.currentUser?.id!) {
       throw new NotAuthorizedError();
     }
@@ -41,6 +46,7 @@ router.put(
     await ticket.save();
     await new TicketUpdatedPublisher(natsWrapper.client).publish({
       id: ticket.id,
+      version: ticket.version,
       title: ticket.title,
       price: ticket.price,
       userId: ticket.userId,
