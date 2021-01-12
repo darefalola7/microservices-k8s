@@ -41,7 +41,7 @@ metadata:
 spec: #actual configuration the way the service behaves
   type: ClusterIP
   ports: #ports that the clusterIP will expose or be available on
-    - name: event-bus
+    - name: tickets
       protocol: TCP
       port: 3000
       targetPort: 3000
