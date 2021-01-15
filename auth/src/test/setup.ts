@@ -14,7 +14,7 @@ declare global {
 let mongo: any;
 
 //Hook function - runs before all our tests is tested
-beforeAll(async () => {
+beforeAll(async (done) => {
   process.env.JWT_KEY = "asdf";
   mongo = new MongoMemoryServer();
   const mongoUri = await mongo.getUri();
@@ -23,6 +23,8 @@ beforeAll(async () => {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
+
+  done();
 });
 
 beforeEach(async () => {
@@ -34,9 +36,10 @@ beforeEach(async () => {
   }
 });
 
-afterAll(async () => {
+afterAll(async (done) => {
   await mongo.stop();
   await mongoose.connection.close();
+  done();
 });
 
 global.signin = async () => {
