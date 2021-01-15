@@ -278,10 +278,10 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@dafaltickets/common@^1.0.9":
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/@dafaltickets/common/-/common-1.0.9.tgz#6d1b74569024291706a4d962cf1d9bc030213e23"
-  integrity sha512-rzHaIzWnrnmuf/99yQXn+5OA2w86IILxRnnVXBiZ37K8k2ntGJCO1DJ6Bi+qFTDwqxqAYEeiuXGylvrUeND+WQ==
+"@dafaltickets/common@^1.0.11":
+  version "1.0.11"
+  resolved "https://registry.yarnpkg.com/@dafaltickets/common/-/common-1.0.11.tgz#82bc561781caa63ddb8b061974907079f5174c9e"
+  integrity sha512-1ZSnhR0MLhb0k7knsUkyKYY8NTaZ6w7wNooTeRMLMW0K2femTZJlk3tIk/WPjYDTZ2o1zSEyITEoooSC7q0XJA==
   dependencies:
     "@types/cookie-session" "^2.0.42"
     "@types/express" "^4.17.9"

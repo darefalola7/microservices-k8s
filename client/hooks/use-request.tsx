@@ -7,18 +7,21 @@ type Props = {
   url: string;
   method: HTTPVERBS;
   body?: any;
-  onSuccess?: () => void;
+  onSuccess?: (data?: any) => void;
 };
 
 const useRequest = ({ url, method, body, onSuccess }: Props) => {
   const [errors, setErrors] = useState<JSX.Element | null>(null);
 
-  const doRequest = async () => {
+  const doRequest = async (props = {}) => {
     try {
       setErrors(null);
-      const response = await axios[method as string](url, body);
+      const response = await axios[method as string](url, {
+        ...body,
+        ...props,
+      });
 
-      if (onSuccess) onSuccess();
+      if (onSuccess) onSuccess(response.data);
 
       return response.data;
     } catch (e) {

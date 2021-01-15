@@ -13,10 +13,14 @@ const SignOut: React.FC<Props> = (props: Props) => {
     onSuccess: () => Router.push("/"),
   });
 
-  const user = useContext(UserContext);
+  const userContextData = useContext(UserContext);
+  const { user } = userContextData;
   useEffect(() => {
     doRequest();
+    userContextData.setUser(undefined);
   }, []);
+
+  console.log(user);
 
   return (
     <Layout currentUser={user}>

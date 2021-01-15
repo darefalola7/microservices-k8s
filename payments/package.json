@@ -1,23 +1,11 @@
 {
-  "name": "tickets",
+  "name": "payments",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "start": "ts-node-dev --poll src/index.ts",
     "test": "jest --watchAll --no-cache"
-  },
-  "jest": {
-    "preset": "ts-jest",
-    "testEnvironment": "node",
-    "globals": {
-      "ts-jest": {
-        "isolatedModules": true
-      },
-      "setupFilesAfterEnv": [
-        "./src/test/setup.ts"
-      ]
-    }
   },
   "keywords": [],
   "author": "",
@@ -26,15 +14,19 @@
     "@dafaltickets/common": "^1.0.11",
     "@types/cookie-session": "^2.0.42",
     "@types/express": "^4.17.9",
+    "@types/flutterwave-node": "^1.0.0",
     "@types/jsonwebtoken": "^8.5.0",
     "@types/mongoose": "^5.10.3",
     "cookie-session": "^1.4.0",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "express-validator": "^6.9.0",
+    "flutterwave-node": "^1.2.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "5.10.19",
     "mongoose-update-if-current": "^1.4.0",
+    "stripe": "^8.130.0",
     "ts-node-dev": "^1.1.1",
     "typescript": "^4.1.3"
   },

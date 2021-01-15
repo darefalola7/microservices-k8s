@@ -13,6 +13,9 @@ const Header: React.FC<Props> = ({ currentUser }: Props) => {
     !currentUser && { label: "Sign Up", href: "/auth/signup" },
     !currentUser && { label: "Sign In", href: "/auth/signin" },
     currentUser && { label: "Sign Out", href: "/auth/signout" },
+    currentUser && { label: "Sell Tickets", href: "/tickets/new" },
+    currentUser && { label: "My Orders", href: "/orders" },
+    { label: "Test", href: "/test" },
   ]
     .filter((linkConfig) => linkConfig)
     .map(({ label, href }) => {

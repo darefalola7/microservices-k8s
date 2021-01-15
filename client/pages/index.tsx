@@ -1,48 +1,58 @@
-import React from "react";
-import buildClient from "../api/build-client";
-import { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import Layout from "../components/Layout";
+import React, { useContext } from "react";
+import { NextPage, NextPageContext } from "next";
+import Link from "next/link";
+// import { UserContext } from "./_app";
 
 type Props = {
-  data: {
-    currentUser: {
-      id: string;
-      email: string;
-    } | null;
-  };
+  tickets: {
+    title: string;
+    price: number;
+    id: string;
+  }[];
 };
 
-const LandingPage: InferGetServerSidePropsType<typeof getServerSideProps> = ({
-  data: { currentUser },
-}: Props) => {
-  console.log("I am in the component ", currentUser);
+// @ts-ignore
+const LandingPage: NextPage<{ Props }> = ({ tickets }: Props) => {
+  // const userContextData = useContext(UserContext);
+  const ticketList = tickets.map((ticket) => {
+    return (
+      <tr key={ticket.id}>
+        <td>{ticket.title}</td>
+        <td>{ticket.price}</td>
+        <td>
+          <Link href="/tickets/[ticketId]" as={`/tickets/${ticket.id}`}>
+            <a>View</a>
+          </Link>
+        </td>
+      </tr>
+    );
+  });
   return (
-    <Layout currentUser={currentUser}>
-      <div>
-        {currentUser ? (
-          <h1>You are signed in</h1>
-        ) : (
-          <h1>You are NOT signed in</h1>
-        )}
-      </div>
-    </Layout>
+    <div>
+      <h1>Tickets</h1>
+      <table className="table">
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Price</th>
+            <th>Link</th>
+          </tr>
+        </thead>
+        <tbody>{ticketList}</tbody>
+      </table>
+    </div>
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-  console.log("I was executed");
-  // Call an external API endpoint to get data
-  const response = await buildClient(context).get("/api/users/currentuser");
-  const currentUser = response.data;
+// @ts-ignore
+LandingPage.getInitialProps = async (
+  context: NextPageContext,
+  client,
+  currentUser
+) => {
+  const { data } = await client.get("api/tickets");
 
-  // console.log(currentUser);
-  // By returning { props: users }, the Users component
-  // will receive `users` as a prop at build time
-  return {
-    props: {
-      data: currentUser,
-    },
-  };
+  return { tickets: data };
 };
 
 export default LandingPage;
