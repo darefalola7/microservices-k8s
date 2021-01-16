@@ -2,7 +2,6 @@ import mongoose from "mongoose";
 import { app } from "./app";
 
 const start = async () => {
-  console.log("Starting up");
   if (!process.env.MONGO_URI) {
     throw new Error("MONGO URI must be defined!!!");
   }
