@@ -11,10 +11,10 @@ declare global {
   }
 }
 
-let mongo: any;
+let mongo: MongoMemoryServer;
 
 //Hook function - runs before all our tests is tested
-beforeAll(async () => {
+beforeAll(async (done) => {
   process.env.JWT_KEY = "asdf";
   mongo = new MongoMemoryServer();
   const mongoUri = await mongo.getUri();
@@ -23,20 +23,25 @@ beforeAll(async () => {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   });
+
+  done();
 });
 
-beforeEach(async () => {
+beforeEach(async (done) => {
   //reach into mongo db and delete all collections
   const collections = await mongoose.connection.db.collections();
 
   for (let collection of collections) {
     await collection.deleteMany({});
   }
+
+  done();
 });
 
-afterAll(async () => {
+afterAll(async (done) => {
   await mongo.stop();
-  await mongoose.connection.close();
+  await mongoose.connection.close(true);
+  done();
 });
 
 global.signin = async () => {
