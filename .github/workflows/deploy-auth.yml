@@ -12,9 +12,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: cd auth && docker build -t damilare77/auth .
-      - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-        env:
+      - run: cd auth && docker build -t damilare77/auth . #build image
+      - run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD #login to docker
+        env: #credentials
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      - run: docker push damilare77/auth
+      - run: docker push damilare77/auth #push to docker
+      - uses: digitalocean/action-doctl@v2 #install doctl
+        with: #credentials
+          token: ${{ secrets:DIGITALOCEAN_ACCESS_TOKEN }} 
+      - run: doctl kubernetes cluster kubeconfig save k8s-ticketing #connect to k8s cluster
+      - run: kubectl rollout restart deployment auth-depl #restart depl with latest docker image
