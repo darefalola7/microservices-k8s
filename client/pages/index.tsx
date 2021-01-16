@@ -29,7 +29,7 @@ const LandingPage: NextPage<{ Props }> = ({ tickets }: Props) => {
   });
   return (
     <div>
-      <h1>Available Tickets</h1>
+      <h1>Buy your favourite Tickets!</h1>
       <table className="table">
         <thead>
           <tr>
