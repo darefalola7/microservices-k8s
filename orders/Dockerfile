@@ -12,10 +12,4 @@ RUN yarn install --production=true
 
 COPY ./ ./
 
-#RUN npm config set proxy null
-#RUN npm config set https-proxy null
-#RUN npm config set registry http://registry.npmjs.org/
-#RUN npm install --only=production
-
-
 CMD [ "yarn", "start" ]
