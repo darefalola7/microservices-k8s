@@ -1,3 +1,4 @@
+#this is a dev ingress configuration!
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress #kind of object
 metadata:
