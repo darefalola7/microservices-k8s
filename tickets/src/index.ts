@@ -5,6 +5,7 @@ import { OrderCreatedListener } from "./events/listeners/order-created-listener"
 import { OrderCancelledListener } from "./events/listeners/order-cancelled-listener";
 
 const start = async () => {
+  console.log("Booting up...");
   if (!process.env.JWT_KEY) {
     throw new Error("JWT KEY must be defined!!!");
   }
@@ -57,7 +58,7 @@ const start = async () => {
   }
 
   app.listen(3000, () => {
-    console.log("Tickets 001");
+    console.log("Tickets 002");
     console.log("Listening on 3000");
   });
 };

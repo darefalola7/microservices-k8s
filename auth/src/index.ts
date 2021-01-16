@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 import { app } from "./app";
 
 const start = async () => {
+  console.log("Booting up...");
   if (!process.env.MONGO_URI) {
     throw new Error("MONGO URI must be defined!!!");
   }
@@ -22,7 +23,7 @@ const start = async () => {
   }
 
   app.listen(3000, () => {
-    console.log("V001");
+    console.log("Auth002");
     console.log("Listening on 3000");
   });
 };
