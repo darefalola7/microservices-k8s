@@ -53,7 +53,12 @@ MyApp.getInitialProps = async (appContext: AppContext) => {
   console.log("getInitialProps: I was executed");
   // Call an external API endpoint to get data
   const client = buildClient(appContext.ctx.req);
-  const response = await client.get("/api/users/currentuser");
+  let response;
+  try {
+    response = await client.get("/api/users/currentuser");
+  } catch (e) {
+    console.log(e.message);
+  }
   const currentUser = response.data;
 
   let pageProps = {};

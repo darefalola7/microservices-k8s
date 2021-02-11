@@ -1,22 +1,77 @@
-apiVersion: skaffold/v2alpha3
+apiVersion: skaffold/v2beta6
 kind: Config
 deploy:
-  kubectl: #files to run with skaffold
-    manifests:
-      - ./infra/k8s/*
-      - ./infra/k8s-dev/*
+  helm:
+    releases:
+    - name: ingress
+      chartPath: .\infra\helm-micro\
+      valuesFiles:
+        - .\infra\helm-micro\ingress-values.yaml
+    - name: auth-mongo
+      chartPath: .\infra\helm-micro\
+      valuesFiles:
+        - .\infra\helm-micro\mongo-values.yaml
+    - name: nats
+      chartPath: .\infra\helm-micro\
+      valuesFiles:
+        - .\infra\helm-micro\nats-values.yaml
+    - name: expiration-redis
+      chartPath: .\infra\helm-micro\
+      valuesFiles:
+        - .\infra\helm-micro\redis-values.yaml
+    - name: orders-mongo
+      chartPath: .\infra\helm-micro\
+      valuesFiles:
+        - .\infra\helm-micro\mongo-values.yaml
+    - name: payment-mongo
+      chartPath: .\infra\helm-micro\
+      valuesFiles:
+        - .\infra\helm-micro\mongo-values.yaml
+    - name: tickets-mongo
+      chartPath: .\infra\helm-micro\
+      valuesFiles:
+        - .\infra\helm-micro\mongo-values.yaml
+    - name: auth
+      chartPath: .\infra\helm-micro\
+      valuesFiles:
+        - .\infra\helm-micro\auth-values.yaml
+      artifactOverrides:
+        image: damilare77/auth
+    - name: expiration
+      chartPath: .\infra\helm-micro\
+      valuesFiles:
+        - .\infra\helm-micro\micro-values.yaml
+      artifactOverrides:
+        image: damilare77/expiration
+    - name: orders
+      chartPath: .\infra\helm-micro\
+      valuesFiles:
+        - .\infra\helm-micro\micro-values.yaml
+      artifactOverrides:
+        image: damilare77/orders
+    - name: payments
+      chartPath: .\infra\helm-micro\
+      valuesFiles:
+        - .\infra\helm-micro\micro-values.yaml
+      artifactOverrides:
+        image: damilare77/payments
+    - name: tickets
+      chartPath: .\infra\helm-micro\
+      valuesFiles:
+        - .\infra\helm-micro\micro-values.yaml
+      artifactOverrides:
+        image: damilare77/tickets
+    - name: client
+      chartPath: .\infra\helm-micro\
+      valuesFiles:
+        - .\infra\helm-micro\client-values.yaml
+      artifactOverrides:
+        image: damilare77/client
 build:
   local:
     push: false
+    concurrency: 5
   artifacts:
-    - image: damilare77/auth
-      context: auth #folder
-      docker:
-        dockerfile: Dockerfile
-      sync:
-        manual:
-          - src: "src/**/*.ts"
-            dest: .
     - image: damilare77/client
       context: client
       docker:
@@ -26,6 +81,14 @@ build:
           - src: "**/*.ts"
             dest: .
           - src: "**/*.tsx"
+            dest: .
+    - image: damilare77/auth
+      context: auth #folder
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
             dest: .
     - image: damilare77/tickets
       context: tickets

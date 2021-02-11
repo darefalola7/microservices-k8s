@@ -3,6 +3,10 @@ import { app } from "./app";
 
 const start = async () => {
   console.log("Booting up...");
+
+  console.log(process.env.MONGO_URI);
+  console.log(process.env.JWT_KEY);
+
   if (!process.env.MONGO_URI) {
     throw new Error("MONGO URI must be defined!!!");
   }

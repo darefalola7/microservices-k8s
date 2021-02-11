@@ -8,8 +8,18 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
+*.tgz
+
+# Helm Charts dependencies
+/charts
+*.lock
+
+.idea
+
+
 common
 stripe.env
+.env
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 
